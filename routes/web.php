@@ -33,4 +33,4 @@ Route::middleware(['auth:sanctum', 'universitas'])->get('/user/edit/{id}',[UserC
 Route::middleware(['auth:sanctum', 'universitas'])->post('/user/update/{id}',[UserController::class,'update']);
 Route::middleware(['auth:sanctum', 'universitas'])->get('/user/editpassword/{id}',[UserController::class,'editpassword']);
 Route::middleware(['auth:sanctum', 'universitas'])->post('/user/updatepassword/{id}',[UserController::class,'updatepassword']);
-Route::middleware(['auth:sanctum', 'universitas'])->post('/user/destroy/{id}',[UserController::class,'destroy']);
+Route::middleware(['auth:sanctum', 'universitas'])->post('/user/destroy/{id}',[UserController::class,'destroy']); 
