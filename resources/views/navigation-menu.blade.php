@@ -19,6 +19,9 @@
                     <x-jet-nav-link href="{{ url('/user') }}">
                     {{ __('User') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ url('/fakultas') }}" :active="request()->routeIs('fakultas')" >
+                    {{ __('Fakultas') }}
+                    </x-jet-nav-link> 
                     @endif
                 </div>
             </div>
@@ -149,7 +152,11 @@
             <x-jet-responsive-nav-link href="{{ url('/user') }}">
             {{ __('User') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ url('/fakultas') }}" :active="request()->routeIs('fakultas')" >
+            {{ __('Fakultas') }} 
+            </x-jet-responsive-nav-link> 
             @endif
+
         </div>
 
         <!-- Responsive Settings Options -->

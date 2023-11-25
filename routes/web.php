@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FakultasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +35,10 @@ Route::middleware(['auth:sanctum', 'universitas'])->post('/user/update/{id}',[Us
 Route::middleware(['auth:sanctum', 'universitas'])->get('/user/editpassword/{id}',[UserController::class,'editpassword']);
 Route::middleware(['auth:sanctum', 'universitas'])->post('/user/updatepassword/{id}',[UserController::class,'updatepassword']);
 Route::middleware(['auth:sanctum', 'universitas'])->post('/user/destroy/{id}',[UserController::class,'destroy']); 
+
+Route::middleware(['auth:sanctum', 'universitas'])->get('/fakultas',[FakultasController::class,'index'])->name('fakultas');
+Route::middleware(['auth:sanctum', 'universitas'])->get('/fakultas/create',[FakultasController::class,'create']);
+Route::middleware(['auth:sanctum', 'universitas'])->post('/fakultas/store',[FakultasController::class,'store']);
+Route::middleware(['auth:sanctum', 'universitas'])->get('/fakultas/edit/{id}',[FakultasController::class,'edit']);
+Route::middleware(['auth:sanctum', 'universitas'])->post('/fakultas/update/{id}',[FakultasController::class,'update']);
+Route::middleware(['auth:sanctum', 'universitas'])->post('/fakultas/destroy/{id}',[FakultasController::class,'destroy']);
