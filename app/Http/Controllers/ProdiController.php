@@ -17,7 +17,6 @@ class ProdiController extends Controller
     {
         $prodis = Prodi::with('fakultas')->paginate(10);
         return view('prodi.index', ['prodi' => $prodis]);
-
     }
 
     /**
@@ -29,7 +28,6 @@ class ProdiController extends Controller
     {
         $fakultas = Fakultas::pluck('nama_fakultas', 'id');
         return view('prodi.create', ['fakultas' => $fakultas]);
-
     }
 
     /**
@@ -47,7 +45,6 @@ class ProdiController extends Controller
         $data = $request->all();
         Prodi::create($data);
         return redirect('/prodi');
-
     }
 
     /**
@@ -69,7 +66,9 @@ class ProdiController extends Controller
      */
     public function edit($id)
     {
-        return view('prodi.edit',[ 'item' => Prodi::find($id) ]);
+        $fakultas = Fakultas::pluck('nama_fakultas', 'id');
+        return view('prodi.edit', ['item' => Prodi::find($id)],['fakultas' => $fakultas]);
+
     }
 
     /**
@@ -82,12 +81,12 @@ class ProdiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-        'name_prodi' => ['required', 'string', 'max:255'],
-        'role' => ['required', 'string', 'max:255'],
+            'fakultas_id' => ['required'],
+            'nama_prodi' => ['required', 'string', 'max:255'],
         ]);
         $data = $request->all();
-        $prodi = Prodi::find($id);
-        $prodi->update($data);
+        $user = Prodi::find($id);
+        $user->update($data);
         return redirect('/prodi');
     }
 
@@ -101,13 +100,6 @@ class ProdiController extends Controller
     {
         $prodi = Prodi::find($id);
         $prodi->delete();
-        return redirect('prodi');
+        return redirect('/prodi');        
     }
 }
-        // $request->validate([
-        //     'nama_prodi' => ['required', 'string', 'max:255'],
-        //     'fakultas_id' => ['required', 'integer', 'exists:fakultas,id'],
-        // ]);
-        // $data = $request->all();
-        // Prodi::create($data);
-        // return redirect('/prodi');

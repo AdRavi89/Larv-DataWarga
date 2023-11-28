@@ -15,8 +15,7 @@ class FakultasController extends Controller
     public function index()
     {
         $fakultas = Fakultas::paginate(10);
-        return view('fakultas.index', ['fakultas' => $fakultas]);
-
+        return view('fakultas.index',['fakultas' => $fakultas]);
     }
 
     /**
@@ -26,7 +25,7 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        //
+        return view('fakultas.create');
     }
 
     /**
@@ -37,7 +36,12 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_fakultas' => ['required', 'string', 'max:255'],
+        ]);
+        $data = $request->all();
+        Fakultas::create($data);
+        return redirect('/fakultas');
     }
 
     /**
@@ -59,7 +63,7 @@ class FakultasController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('fakultas.edit', ['item' => Fakultas::find($id)]);
     }
 
     /**
@@ -71,7 +75,13 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_fakultas' => ['required', 'string', 'max:255'],
+        ]);
+        $data = $request->all();
+        $user = Fakultas::find($id);
+        $user->update($data);
+        return redirect('/fakultas');
     }
 
     /**
@@ -85,6 +95,5 @@ class FakultasController extends Controller
         $fakultas = Fakultas::find($id);
         $fakultas->delete();
         return redirect('fakultas');
-
     }
 }
