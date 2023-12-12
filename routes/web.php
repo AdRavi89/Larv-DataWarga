@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\FakultasController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PendaftaranController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,10 +26,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', 
+    [DashboardController::class, 'index'])
+    ->name('dashboard');
 });
+ 
 Route::middleware(['auth:sanctum', 'universitas'])->get('/user',[UserController::class,'index']);
 Route::middleware(['auth:sanctum', 'universitas'])->get('/user/create',[UserController::class,'create']);
 Route::middleware(['auth:sanctum', 'universitas'])->post('/user/store',[UserController::class,'store']);
@@ -50,3 +53,7 @@ Route::middleware(['auth:sanctum', 'universitas'])->post('/prodi/store',[ProdiCo
 Route::middleware(['auth:sanctum', 'universitas'])->get('/prodi/edit/{id}', [ProdiController::class,'edit']); 
 Route::middleware(['auth:sanctum', 'universitas'])->post('/prodi/update/{id}',[ProdiController::class,'update']);
 Route::middleware(['auth:sanctum', 'universitas'])->post('/prodi/destroy/{id}',[ProdiController::class,'destroy']);
+
+Route::middleware(['auth:sanctum'])->get('/pendaftaran/create', [PendaftaranController::class,'create']);
+Route::middleware(['auth:sanctum'])->post('/pendaftaran/store', [PendaftaranController::class,'store']);
+ 

@@ -17,4 +17,7 @@ class Prodi extends Model
     public function fakultas(){
         return $this->hasOne(Fakultas::class, 'id', 'fakultas_id');
     }
+    public function nama_lengkap(){
+    return $this->fakultas->nama_fakultas.' - '.$this->nama_prodi;
+} 
 }
