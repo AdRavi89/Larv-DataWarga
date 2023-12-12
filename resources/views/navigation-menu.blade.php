@@ -25,6 +25,10 @@
                     <x-jet-nav-link href="{{ url('/prodi') }}" :active="Str::contains(request()->url(), 'prodi')">
                     {{ __('Prodi') }}
                     </x-jet-nav-link> 
+                    <x-jet-nav-link href="{{ url('/pendaftaran') }}" :active="Str::contains(request()->url(), 'pendaftaran')">
+                    {{ __('Pendaftaran') }}
+                    </x-jet-nav-link>
+
                     @endif
                 </div>
             </div>

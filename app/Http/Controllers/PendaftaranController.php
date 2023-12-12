@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pendaftaran;
-use App\Models\Prodi;
 use Carbon\Carbon;
+use App\Models\Prodi;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PendaftaranController;
 
 class PendaftaranController extends Controller
 {
@@ -15,9 +16,31 @@ class PendaftaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+    $q = $request->get('q');
+    $tanggal_awal = $request->get('tanggal_awal', date('Y-m-1'));
+    $tanggal_akhir = $request->get('tanggal_akhir', date('Y-m-d'));
+    $status = $request->get('status', 'DAFTAR');
+    $pendaftarans = Pendaftaran::where('tanggal_pendaftaran','>=',$tanggal_awal)
+        ->where('tanggal_pendaftaran', '<=', $tanggal_akhir)
+        ->when(($status=='SEMUA' ? '' : $status),function($query, $status){
+            return $query->where('status', $status);
+        })->where(function($query) use($q) {
+            $query->when($q,function($query, $q){
+                return $query->whereHas('prodi', function($query) use ($q){
+                    $query->where('nama_prodi', 'like', '%'.$q.'%');
+                })->orWhere('nama_lengkap', 'like', '%'.$q.'%')
+                ->orWhere('alamat', 'like', '%'.$q.'%')
+                ->orWhere('kota', 'like', '%'.$q.'%')
+                ->orWhere('asal_sekolah', 'like', '%'.$q.'%');
+            });
+        })
+        ->paginate()->withQueryString();
+    return view('pendaftaran.index', ['pendaftaran' => $pendaftarans, 'tanggal_awal'
+=> $tanggal_awal
+        , 'tanggal_akhir' => $tanggal_akhir, 'status' => $status, 'q' => $q]);
+    
     }
 
     /**
@@ -102,4 +125,23 @@ class PendaftaranController extends Controller
     {
         //
     }
+
+     
+public function terima(Request $request, $id)
+{
+    $pendaftaran = Pendaftaran::find($id);
+    $pendaftaran->status = 'DITERIMA';
+    $pendaftaran->save();
+    return redirect('/pendaftaran');
+}
+
+
+public function tolak(Request $request, $id)
+{
+    $pendaftaran = Pendaftaran::find($id);
+    $pendaftaran->status = 'TIDAK DITERIMA';
+    $pendaftaran->save();
+    return redirect('/pendaftaran');
+}
+
 }
