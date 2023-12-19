@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prodi;
 use App\Models\Fakultas;
 use Illuminate\Http\Request;
 
@@ -92,6 +93,13 @@ class FakultasController extends Controller
      */
     public function destroy($id)
     {
+        
+        $prodi = Prodi::has('fakultas')->where('fakultas_id', '=', $id)->first();
+        if ($prodi) {
+           return back()->withErrors(['errors' => 'Fakultas adalah foreign key, data masih terikat dengan Data Prodi']);
+        }
+        
+
         $fakultas = Fakultas::find($id);
         $fakultas->delete();
         return redirect('fakultas');

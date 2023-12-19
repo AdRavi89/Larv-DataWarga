@@ -102,4 +102,5 @@ class ProdiController extends Controller
         $prodi->delete();
         return redirect('/prodi');        
     }
+        
 }
