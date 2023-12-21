@@ -114,4 +114,15 @@ class UserController extends Controller
     return view('user.editPassword',[ 'item' => User::find($id) ]);
         //
     }
+        public function updatepassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => $this->passwordRules(),
+        ]);
+        $data = $request->all();
+        $data['password'] = Hash::make($data['password']);
+        $user = User::find($id);
+        $user->update($data);
+        return redirect('/user');
+    }
 }

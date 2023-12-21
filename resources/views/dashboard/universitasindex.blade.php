@@ -35,7 +35,7 @@
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 
                         dark:text-white">{{ number_format($tidak_diterima) }}</h5>
                     <p class="font-normal text-gray-700">
-                        CAMABA diterima dalam bulan terakhir</p> 
+                        CAMABA ditolak dalam bulan terakhir</p> 
                                         </div>
             </div>
         </div>

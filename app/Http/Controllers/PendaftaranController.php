@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Prodi;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PendaftaranController;
 
@@ -37,6 +38,7 @@ class PendaftaranController extends Controller
             });
         })
         ->paginate()->withQueryString();
+        $user = User::paginate(10);
     return view('pendaftaran.index', ['pendaftaran' => $pendaftarans, 'tanggal_awal'
 => $tanggal_awal
         , 'tanggal_akhir' => $tanggal_akhir, 'status' => $status, 'q' => $q]);
